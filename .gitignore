@@ -1,0 +1,28 @@
+# --- OS / Editor ---
+.DS_Store
+.vscode/
+.idea/
+
+# --- Environment Files ---
+.env
+.env.production
+.env.local
+
+# --- Backend (Rails) ---
+/backend/.bundle
+/backend/log/*
+/backend/tmp/*
+/backend/storage/*
+/backend/public/assets
+/backend/config/*.key
+!/backend/log/.keep
+!/backend/tmp/.keep
+
+# --- Frontend (React/Vite) ---
+/frontend/node_modules/
+/frontend/dist/
+/frontend/dist-ssr/
+/frontend/*.log
+/frontend/.eslintcache
+
+# --- Docker ---

@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - knotion_app_db_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  web:
+    build: ./backend
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    volumes:
+      - ./backend:/app
+      - knotion_app_bundle_data:/usr/local/bundle
+    ports:
+      - "3002:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_NAME: ${POSTGRES_DB}
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - knotion_app_front_data:/app/node_modules
+    ports:
+      - "5174:5173"
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+
+volumes:
+  knotion_app_db_data:
+  knotion_app_bundle_data:
+  knotion_app_front_data:
