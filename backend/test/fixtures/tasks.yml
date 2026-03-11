@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  user: one
+  title: MyString
+  status: 1
+  due_date: 2026-03-11
+  description: MyText
+
+two:
+  company: two
+  user: two
+  title: MyString
+  status: 1
+  due_date: 2026-03-11
+  description: MyText
