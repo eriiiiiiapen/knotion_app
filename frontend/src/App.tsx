@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Input } from "./components/ui/input"
+import { Textarea } from "./components/ui/textarea"
 import {
   Table,
   TableBody,
@@ -9,6 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog"
 
 interface Task {
   id: number;
@@ -26,16 +37,41 @@ interface UserData {
 
 function App() {
   const [data, setData] = useState<UserData | null>(null);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const fetchData = () => {
     fetch("http://localhost:3002/api/v1/me")
       .then(res => res.json())
       .then(json => setData(json))
       .catch(err => console.error("Fetch error:", err))
-  }, [])
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleCreateTask = async () => {
+    const response = await fetch("http://localhost:3002/api/v1/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        task: { title, description, status: "todo" }
+      })
+    });
+
+    if (response.ok){
+      setOpen(false);
+      setTitle("");
+      setDescription("");
+      fetchData();
+    }
+  }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-50/50">
       <div className="max-w-5xl mx-auto py-10 px-6 space-y-8">
         <header className="flex justify-between items-end">
           <div>
@@ -44,10 +80,37 @@ function App() {
               {data ? `所属：${data.company_name}` : "読み込み中..."}
             </p>
           </div>
-          <Button>新規タスク作成</Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-slate-900 text-white hover:bg-slate-800">新規タスク作成</Button>
+            </DialogTrigger>
+            <DialogContent className="bg-white">
+              <DialogHeader>
+                <DialogTitle>タスクの新規作成</DialogTitle>
+                <DialogDescription>
+                  割り当てるタスクの詳細を入力してください。
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <Input
+                  placeholder="タスク名"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <Textarea
+                  placeholder="説明"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+              <DialogFooter>
+                <Button onClick={handleCreateTask} className="bg-slate-900 text-white hover:bg-slate-800">保存する</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </header>
 
-        <div className="rounded-md border bg-card">
+        <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
           <Table>
             <TableCaption>最近割り当てられたタスクの一覧</TableCaption>
             <TableHeader>
@@ -78,7 +141,7 @@ function App() {
                   </TableCell>
                   <TableCell className="text-center">{task.due_date || "未設定"}</TableCell>
                   <TableCell className="text-center">
-                    <Button variant="ghost" size="sm">詳細</Button>
+                    <Button variant="outline" size="sm">詳細</Button>
                   </TableCell>
                 </TableRow>
               ))}
