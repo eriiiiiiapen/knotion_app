@@ -42,6 +42,8 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
   const fetchData = () => {
     fetch("http://localhost:3002/api/v1/me")
       .then(res => res.json())
@@ -68,6 +70,10 @@ function App() {
       setDescription("");
       fetchData();
     }
+  }
+
+  const handleOpenDetail = (task: Task) => {
+    setSelectedTask(task);
   }
 
   return (
@@ -141,7 +147,7 @@ function App() {
                   </TableCell>
                   <TableCell className="text-center">{task.due_date || "未設定"}</TableCell>
                   <TableCell className="text-center">
-                    <Button variant="outline" size="sm">詳細</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleOpenDetail(task)}>詳細</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -154,6 +160,30 @@ function App() {
               )}
             </TableBody>
           </Table>
+          <Dialog open={!!selectedTask} onOpenChange={(open) => !open && setSelectedTask(null)}>
+            <DialogContent className="bg-white">
+              <DialogHeader>
+                <DialogTitle>タスクの詳細</DialogTitle>
+                <DialogDescription>
+                  現在開いているタスクの詳細を表示しています。
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div>
+                  <p className="font-bold">タスク名</p>
+                  {selectedTask?.title}
+                </div>
+                <div>
+                  <p className="font-bold">内容</p>
+                  {selectedTask?.description}
+                </div>
+                <div>
+                  <p className="font-bold">ステータス</p>
+                  {selectedTask?.status}
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
