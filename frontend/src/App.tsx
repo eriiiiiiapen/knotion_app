@@ -181,6 +181,10 @@ function App() {
                   <p className="font-bold">ステータス</p>
                   {selectedTask?.status}
                 </div>
+                <div>
+                  <p className="font-bold">期限</p>
+                  {selectedTask?.due_date ?? '未設定'}
+                </div>
               </div>
             </DialogContent>
           </Dialog>
