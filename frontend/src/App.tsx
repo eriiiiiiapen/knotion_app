@@ -41,6 +41,7 @@ function App() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [due_date, setDueDate] = useState("");
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
@@ -60,7 +61,7 @@ function App() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        task: { title, description, status: "todo" }
+        task: { title, description, due_date, status: "todo" }
       })
     });
 
@@ -68,6 +69,7 @@ function App() {
       setOpen(false);
       setTitle("");
       setDescription("");
+      setDueDate("");
       fetchData();
     }
   }
@@ -108,6 +110,12 @@ function App() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
+                <Input
+                  placeholder="期限日"
+                  value={due_date}
+                  type="date"
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
               </div>
               <DialogFooter>
                 <Button onClick={handleCreateTask} className="bg-slate-900 text-white hover:bg-slate-800">保存する</Button>
@@ -117,8 +125,10 @@ function App() {
         </header>
 
         <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
+          <div className="p-2 bg-gray-200">
+            最近割り当てられたタスクの一覧
+          </div>
           <Table>
-            <TableCaption>最近割り当てられたタスクの一覧</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[50px]">ID</TableHead>
