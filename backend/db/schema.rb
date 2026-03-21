@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_20_130931) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_21_150146) do
   create_table "companies", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -37,11 +37,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_130931) do
     t.datetime "created_at", null: false
     t.text "description"
     t.date "due_date"
+    t.integer "knowledge_article_id"
     t.integer "status"
     t.string "title"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["company_id"], name: "index_tasks_on_company_id"
+    t.index ["knowledge_article_id"], name: "index_tasks_on_knowledge_article_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -61,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_130931) do
 
   add_foreign_key "knowledge_articles", "companies"
   add_foreign_key "tasks", "companies"
+  add_foreign_key "tasks", "knowledge_articles"
   add_foreign_key "tasks", "users"
   add_foreign_key "users", "companies"
 end
