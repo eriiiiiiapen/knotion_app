@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :company
   belongs_to :user
-  has_many :knowledge_articles
+  belongs_to :knowledge_article, optional: true
 
   enum :status, { todo: 0, doing: 1, done: 2 }
 
