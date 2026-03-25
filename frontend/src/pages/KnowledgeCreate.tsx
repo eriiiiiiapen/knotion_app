@@ -34,7 +34,7 @@ export default function KnowledgeCreate() {
                 placeholder="記事のタイトル（例：住所変更手続きについて）" 
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="text-lg font-semibold"
+                className="border border-gray-300 text-lg font-semibold"
             />
 
             <div className="min-h-[400px]">
