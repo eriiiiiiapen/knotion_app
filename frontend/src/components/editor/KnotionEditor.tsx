@@ -28,18 +28,18 @@ export const KnotionEditor = ({ content, onChange, editable = true }: Props) => 
   return (
     <div className="space-y-2">
       {editable && (
-        <div className="flex gap-2 p-1 bg-slate-100 rounded-t-md border-x border-t">
+        <div className="flex gap-2 p-1 bg-slate-200 rounded-t-md border-x border-t">
           <Button 
             variant="ghost" size="sm" 
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive('bold') ? 'bg-slate-200' : ''}
+            className={editor.isActive('bold') ? 'bg-slate-300 rounded' : ''}
           >
             B
           </Button>
           <Button 
             variant="ghost" size="sm" 
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={editor.isActive('heading') ? 'bg-slate-200' : ''}
+            className={editor.isActive('heading') ? 'bg-slate-300 rounded' : ''}
           >
             H2
           </Button>
