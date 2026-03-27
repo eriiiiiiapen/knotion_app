@@ -48,7 +48,7 @@ export default function KnowledgeList() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {articles.map((article) => (
-            <Card key={article.id} className="hover:shadow-md transition-shadow flex flex-col">
+            <Card key={article.id} className="hover:shadow-md cursor-pointer transition-shadow flex flex-col">
               <CardHeader className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
