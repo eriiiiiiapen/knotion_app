@@ -36,7 +36,7 @@ export default function KnowledgeList() {
           <h1 className="text-3xl font-bold tracking-tight">労務ナレッジ一覧</h1>
           <p className="text-muted-foreground">社内の規定や手続きのルールを管理します。</p>
         </div>
-        <Button asChild className="bg-slate-900 text-white hover:bg-slate-800">
+        <Button asChild className="bg-slate-900 text-white hover:bg-slate-600">
           <Link to="/knowledge/new">
             <Plus className="mr-2 h-4 w-4" /> 新規記事作成
           </Link>
