@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "me", to: "users#me"
       resources :tasks, only: [:create, :update, :destroy]
-      resources :knowledge_articles, only: [:index, :create, :update, :destroy]
+      resources :knowledge_articles, only: [:index, :create, :update, :destroy, :show]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

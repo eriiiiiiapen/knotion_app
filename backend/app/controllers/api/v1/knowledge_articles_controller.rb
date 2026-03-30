@@ -20,6 +20,16 @@ class Api::V1::KnowledgeArticlesController < ApplicationController
         end
     end
 
+    def show
+        article = KnowledgeArticle.find(params[:id])
+
+        if article
+            render json: article, status: :ok
+        else
+            render json: { error: "記事が見つかりませんでした" }, status: :not_found
+        end
+    end
+
     private
 
     def article_params
