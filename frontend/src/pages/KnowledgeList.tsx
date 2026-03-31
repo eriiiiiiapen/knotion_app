@@ -50,8 +50,8 @@ export default function KnowledgeList() {
           {articles.map((article) => (
             <Card key={article.id} className="hover:shadow-md cursor-pointer transition-shadow flex flex-col">
               <CardHeader className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                <div className="flex items-center justify-end mb-2">
+                  <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
                     article.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                   }`}>
                     {article.status}
@@ -65,9 +65,8 @@ export default function KnowledgeList() {
                   {new Date(article.updated_at).toLocaleDateString()} 更新
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0 pb-6">
+              <CardContent className="pt-2 pb-6">
                 <Button variant="outline" className="w-full" asChild>
-                  {/* TODO:詳細表示や編集へのリンク */}
                   <Link to={`/knowledge/${article.id}`}>表示する</Link>
                 </Button>
               </CardContent>
