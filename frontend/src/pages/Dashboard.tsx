@@ -35,6 +35,11 @@ interface UserData {
   tasks: Task[];
 }
 
+interface KnowledgeArticle {
+  id: number,
+  title: string;
+}
+
 function App() {
   const [data, setData] = useState<UserData | null>(null);
   const [open, setOpen] = useState(false);
@@ -45,6 +50,9 @@ function App() {
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
+  const [knowledgeArticles, setKnowledgeArticles] = useState<KnowledgeArticle[]>([]);
+  const [selectedKnowledgeId, setSelectedKnowledgeId] = useState<string>("");
+
   const fetchData = () => {
     fetch("http://localhost:3002/api/v1/me")
       .then(res => res.json())
@@ -52,8 +60,16 @@ function App() {
       .catch(err => console.error("Fetch error:", err))
   };
 
+  const fetchKnowledges = () => {
+    fetch("http://localhost:3002/api/v1/knowledge_articles")
+      .then(res => res.json())
+      .then(json => setKnowledgeArticles(json))
+      .catch(err => console.error("Knowledge fetch error:", err));
+  };
+
   useEffect(() => {
     fetchData();
+    fetchKnowledges();
   }, []);
 
   const handleCreateTask = async () => {
@@ -61,7 +77,7 @@ function App() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        task: { title, description, due_date, status: "todo" }
+        task: { title, description, due_date, status: "todo", knowledge_article_id: selectedKnowledgeId || null }
       })
     });
 
@@ -70,6 +86,7 @@ function App() {
       setTitle("");
       setDescription("");
       setDueDate("");
+      setSelectedKnowledgeId("");
       fetchData();
     }
   }
@@ -105,6 +122,19 @@ function App() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-muted-foreground">関連ナレッジ</label>
+                  <select 
+                    className="w-full p-2 border rounded-md text-sm bg-white"
+                    value={selectedKnowledgeId}
+                    onChange={(e) => setSelectedKnowledgeId(e.target.value)}
+                  >
+                    <option value="">選択なし</option>
+                    {knowledgeArticles.map((kb) => (
+                      <option key={kb.id} value={kb.id}>{kb.title}</option>
+                    ))}
+                  </select>
+                </div>
                 <Textarea
                   placeholder="説明"
                   value={description}
@@ -195,6 +225,17 @@ function App() {
                   <p className="font-bold">期限</p>
                   {selectedTask?.due_date ?? '未設定'}
                 </div>
+                {selectedTask?.knowledge_article && (
+                  <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
+                    <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
+                    <a 
+                      href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
+                      className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
+                    >
+                      📖 {(selectedTask as any).knowledge_article.title}
+                    </a>
+                  </div>
+                )}
               </div>
             </DialogContent>
           </Dialog>
