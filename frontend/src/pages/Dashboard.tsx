@@ -27,6 +27,10 @@ interface Task {
   status: string;
   description: string;
   due_date: string;
+  knowledge_article?: {
+    id: number;
+    title: string;
+  };
 }
 
 interface UserData {
@@ -226,16 +230,16 @@ function App() {
                   {selectedTask?.due_date ?? '未設定'}
                 </div>
                 {selectedTask?.knowledge_article && (
-                  <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
-                    <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
-                    <a 
-                      href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
-                      className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
-                    >
-                      📖 {(selectedTask as any).knowledge_article.title}
-                    </a>
-                  </div>
-                )}
+                      <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
+                        <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
+                        <a 
+                          href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
+                          className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
+                        >
+                          📖 {(selectedTask as any).knowledge_article.title}
+                        </a>
+                      </div>
+                    )}
               </div>
             </DialogContent>
           </Dialog>

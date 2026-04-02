@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   def me
-    user = User.first
+    user = User.includes(tasks: :knowledge_article).first
 
     render json: {
       id: user.id,
@@ -13,6 +13,10 @@ class Api::V1::UsersController < ApplicationController
           status: task.status,
           description: task.description,
           due_date: task.due_date,
+          knowledge_article: task.knowledge_article ? {
+            id: task.knowledge_article.id,
+            title: task.knowledge_article.title
+          } : nil
         }
       }
     }
