@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { KnotionEditor } from "../components/editor/KnotionEditor";
 import { ChevronLeft, Edit } from "lucide-react";
@@ -35,8 +35,10 @@ export default function KnowledgeShow() {
                 <Button variant="ghost" onClick={() => navigate("/knowledge")} className="gap-2">
                 <ChevronLeft className="h-4 w-4" /> 一覧へ戻る
                 </Button>
-                <Button variant="outline" className="gap-2">
-                <Edit className="h-4 w-4" /> 編集する
+                <Button variant="outline" className="gap-2" asChild>
+                    <Link to={`/knowledge/${article.id}/edit`}>
+                        <Edit className="h-4 w-4" /> 編集する
+                    </Link>
                 </Button>
             </div>
 
