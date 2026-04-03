@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import KnowledgeCreate from "./pages/KnowledgeCreate";
 import KnowledgeList from "./pages/KnowledgeList";
 import KnowledgeShow from "./pages/KnowledgeShow";
+import KnowledgeEdit from "./pages/KnowledgeEdit";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/knowledge" element={<KnowledgeList />} />
         <Route path="/knowledge/new" element={<KnowledgeCreate />} />
         <Route path="/knowledge/:id" element={<KnowledgeShow />} />
+        <Route path="/knowledge/:id/edit" element={<KnowledgeEdit />} />
       </Routes>
     </BrowserRouter>
   );

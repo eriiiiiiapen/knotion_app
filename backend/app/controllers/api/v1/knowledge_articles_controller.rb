@@ -30,6 +30,16 @@ class Api::V1::KnowledgeArticlesController < ApplicationController
         end
     end
 
+    def update
+        article = KnowledgeArticle.find(params[:id])
+
+        if article.update(article_params)
+            render json: article
+        else
+            render json: { errors: article.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+
     private
 
     def article_params
