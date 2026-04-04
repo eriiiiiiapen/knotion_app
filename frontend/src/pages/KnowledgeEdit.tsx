@@ -43,7 +43,7 @@ export default function KnowledgeEdit() {
                 <h1 className="text-2xl font-bold">記事の編集</h1>
                 <div className="space-x-2">
                     <Button variant="outline" onClick={() => navigate(-1)}>キャンセル</Button>
-                    <Button className="bg-slate-900 text-white" onClick={handleUpdate}>更新する</Button>
+                    <Button className="bg-slate-900 text-white hover:bg-slate-600" onClick={handleUpdate}>更新する</Button>
                 </div>
             </div>
             
