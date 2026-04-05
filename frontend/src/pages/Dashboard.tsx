@@ -99,6 +99,22 @@ function App() {
     setSelectedTask(task);
   }
 
+  const toggleTaskStatus = async (task: Task) => {
+  const newStatus = task.status === "done" ? "todo" : "done";
+
+  const response = await fetch(`http://localhost:3002/api/v1/tasks/${task.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        task: { status: newStatus }
+      })
+    });
+
+    if (response.ok) {
+      fetchData();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50/50">
       <div className="max-w-5xl mx-auto py-10 px-6 space-y-8">
@@ -183,14 +199,25 @@ function App() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs flex justify-center font-medium ${
-                      task.status === 'done' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
+                    <span className={`px-2 py-1 rounded-full text-[10px] flex justify-center font-bold uppercase ${
+                      task.status === 'done' 
+                        ? 'bg-green-100 text-green-700 border border-green-200' 
+                        : 'bg-slate-100 text-slate-600 border border-slate-200'
                     }`}>
-                      {task.status.toUpperCase()}
+                      {task.status}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">{task.due_date || "未設定"}</TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center space-x-2">
+                    <Button 
+                      variant={task.status === "done" ? "default" : "outline"} 
+                      size="sm"
+                      onClick={() => toggleTaskStatus(task)}
+                      className={task.status === "done" ? "bg-green-600 hover:bg-green-700 text-white" : ""}
+                    >
+                      {task.status === "done" ? "完了済み" : "完了にする"}
+                    </Button>
+
                     <Button variant="outline" size="sm" onClick={() => handleOpenDetail(task)}>詳細</Button>
                   </TableCell>
                 </TableRow>
@@ -230,16 +257,16 @@ function App() {
                   {selectedTask?.due_date ?? '未設定'}
                 </div>
                 {selectedTask?.knowledge_article && (
-                      <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
-                        <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
-                        <a 
-                          href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
-                          className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
-                        >
-                          📖 {(selectedTask as any).knowledge_article.title}
-                        </a>
-                      </div>
-                    )}
+                  <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
+                    <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
+                    <a 
+                      href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
+                      className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
+                    >
+                      📖 {(selectedTask as any).knowledge_article.title}
+                    </a>
+                  </div>
+                )}
               </div>
             </DialogContent>
           </Dialog>
