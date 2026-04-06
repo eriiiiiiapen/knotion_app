@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -20,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog"
+import { ChevronRight } from "lucide-react"
 
 interface Task {
   id: number;
@@ -56,6 +58,8 @@ function App() {
 
   const [knowledgeArticles, setKnowledgeArticles] = useState<KnowledgeArticle[]>([]);
   const [selectedKnowledgeId, setSelectedKnowledgeId] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const fetchData = () => {
     fetch("http://localhost:3002/api/v1/me")
@@ -100,9 +104,9 @@ function App() {
   }
 
   const toggleTaskStatus = async (task: Task) => {
-  const newStatus = task.status === "done" ? "todo" : "done";
+    const newStatus = task.status === "done" ? "todo" : "done";
 
-  const response = await fetch(`http://localhost:3002/api/v1/tasks/${task.id}`, {
+    const response = await fetch(`http://localhost:3002/api/v1/tasks/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -270,6 +274,11 @@ function App() {
               </div>
             </DialogContent>
           </Dialog>
+        </div>
+        <div className="flex justify-end items-center">
+          <Button variant="ghost" onClick={() => navigate("/knowledge")} className="gap-2 hover:opacity-50">
+            <ChevronRight className="h-4 w-4" /> ナレッジ一覧へ
+          </Button>
         </div>
       </div>
     </div>
