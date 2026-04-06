@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
-import { Plus, BookOpen, Clock } from "lucide-react";
+import { Plus, BookOpen, Clock, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface KnowledgeArticle {
   id: number;
@@ -15,6 +16,8 @@ interface KnowledgeArticle {
 export default function KnowledgeList() {
   const [articles, setArticles] = useState<KnowledgeArticle[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3002/api/v1/knowledge_articles")
@@ -81,6 +84,11 @@ export default function KnowledgeList() {
           )}
         </div>
       )}
+        <div className="flex justify-end items-center">
+            <Button variant="ghost" onClick={() => navigate("/")} className="gap-2 hover:opacity-50">
+                <ChevronRight className="h-4 w-4" /> タスク一覧へ
+            </Button>
+        </div>
     </div>
   );
 }
