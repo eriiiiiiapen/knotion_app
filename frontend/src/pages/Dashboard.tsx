@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Plus } from "lucide-react"
 
 interface Task {
   id: number;
@@ -131,7 +131,9 @@ function App() {
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-slate-900 text-white hover:bg-slate-800">新規タスク作成</Button>
+              <Button className="bg-slate-900 text-white hover:bg-slate-600">
+                <Plus className="mr-2 h-4 w-4" /> 新規タスク作成
+              </Button>
             </DialogTrigger>
             <DialogContent className="bg-white">
               <DialogHeader>
