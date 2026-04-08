@@ -27,7 +27,10 @@ export default function KnowledgeCreate() {
         <div className="max-w-4xl mx-auto py-10 px-6 space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold">ナレッジ記事の作成</h1>
-                <Button className="border border-black hover:bg-gray-200" onClick={handleSave}>保存する</Button>
+                <div className="space-x-2">   
+                    <Button className="hover:bg-gray-200" onClick={() => navigate("/knowledge")}>キャンセル</Button>
+                    <Button className="border border-black hover:bg-gray-200" onClick={handleSave}>保存する</Button>
+                </div>
             </div>
             
             <Input 
