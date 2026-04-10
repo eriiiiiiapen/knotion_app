@@ -149,7 +149,7 @@ function App() {
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-muted-foreground">関連ナレッジ</label>
+                  <label className="text-xs font-medium text-muted-foreground">関連規則</label>
                   <select 
                     className="w-full p-2 border rounded-md text-sm bg-white"
                     value={selectedKnowledgeId}
@@ -264,7 +264,7 @@ function App() {
                 </div>
                 {selectedTask?.knowledge_article && (
                   <div className="p-3 bg-slate-100 rounded-md border border-slate-200">
-                    <p className="text-xs font-bold text-slate-500 uppercase">関連ナレッジ</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase">関連規則</p>
                     <a 
                       href={`/knowledge/${(selectedTask as any).knowledge_article.id}`}
                       className="text-blue-600 hover:underline font-semibold flex items-center gap-1"
@@ -279,7 +279,7 @@ function App() {
         </div>
         <div className="flex justify-end items-center">
           <Button variant="ghost" onClick={() => navigate("/knowledge")} className="gap-2 hover:opacity-50">
-            <ChevronRight className="h-4 w-4" /> ナレッジ一覧へ
+            <ChevronRight className="h-4 w-4" /> 規則一覧へ
           </Button>
         </div>
       </div>

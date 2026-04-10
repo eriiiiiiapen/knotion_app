@@ -36,7 +36,7 @@ export default function KnowledgeList() {
     <div className="max-w-6xl mx-auto py-10 px-6 space-y-8">
       <header className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">労務ナレッジ一覧</h1>
+          <h1 className="text-3xl font-bold tracking-tight">労務規則一覧</h1>
           <p className="text-muted-foreground">社内の規定や手続きのルールを管理します。</p>
         </div>
         <Button asChild className="bg-slate-900 text-white hover:bg-slate-600">
@@ -79,7 +79,7 @@ export default function KnowledgeList() {
           {articles.length === 0 && (
             <div className="col-span-full py-20 text-center border-2 border-dashed rounded-xl">
               <BookOpen className="mx-auto h-12 w-12 text-slate-300 mb-4" />
-              <p className="text-slate-500">まだ記事がありません。新しいナレッジを追加してください</p>
+              <p className="text-slate-500">まだ記事がありません。新しい規則を追加してください</p>
             </div>
           )}
         </div>
